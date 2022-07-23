@@ -1,0 +1,52 @@
+<div class="container mt-3">
+  <div class="container">
+    <div class="card">
+      <p-table #dt [value]="agences" [rows]="10" [columns]="columns"
+                [paginator]="true" [rowsPerPageOptions]="[10, 25, 50]"
+                selectionMode="single" [showFirstLastIcon]="false">
+                <ng-template pTemplate="caption">
+            <div class="row">
+                <h2>Liste d'agences</h2>
+            </div>
+            <hr>
+            <div class="d-flex align-items-center justify-content-between">
+                <button pButton  label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2" (click)="openAddAgence()"></button>
+                <form #f="ngForm" (ngSubmit)="search(f.value)">
+                  <div class="form-group">
+                    <input ngModel name="key" type="text" pInputText placeholder="Recherchez..."/>
+                    <button
+                      pButton
+                      icon="pi pi-search"
+                      class="mx-1 p-button-outlined"
+                    ></button>
+                  </div>
+                </form>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+              <tr>
+                  <th *ngFor="let col of columns">
+                      {{ col.header }}
+                  </th>
+                  <th class="text-center"> Operations </th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-agence>
+              <tr>
+                  <td> {{ agence.id }} </td>
+                  <td> {{ agence.codeagence }} </td>
+                  <td> {{ agence.name }} </td>
+                  <td *ngIf="agence.statut"> Ouvert </td>
+                  <td *ngIf="!agence.statut"> Fermee </td>
+                  <td class="text-center">
+                      <button (click)="openEditAgence(agence)" pButton type="button" icon="pi pi-pencil" class="p-button-text p-button-success"></button>
+                      <button (click)="onDelete(agence.id)" pButton type="button" icon="pi pi-trash" class="p-button-text p-button-danger"></button>
+                  </td>
+              </tr>
+          </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+

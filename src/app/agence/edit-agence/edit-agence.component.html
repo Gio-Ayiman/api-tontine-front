@@ -1,0 +1,31 @@
+<div class="col-12">
+    <form class="form" [formGroup]="editAgenceForm" (ngSubmit)="submit()">
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="code">Code d'agence</label>
+                <input pInputText class="form-control" id="code" placeholder="Code" formControlName="code">
+            </div>
+            <div class="form-group col-6">
+                <label for="nom"> Nom de l'entreprise </label>
+                <input pInputText class="form-control" placeholder="Nom" formControlName="nom">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="form-group col-6">
+                <label for="status">Statuts de l'entreprise</label>
+                <select pInputText id="status" formControlName="statut" class="form-select">
+                    <option selected>Selectionnez</option>
+                    <option value="1">Ouvert</option>
+                    <option value="2">Ferme</option>
+                </select>
+            </div>
+            <div class="form-group col-6">
+                <label for="rib">Releve d'identite bancaire</label>
+                <input pInputText type="text" id="rib" placeholder="RIB" formControlName="rib" class="form-control">
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button pButton pRipple type="submit" [disabled]="!editAgenceForm.valid" label="Enregistrer" class="mt-2 p-btn-success"></button>
+        </div>
+    </form>
+</div>
