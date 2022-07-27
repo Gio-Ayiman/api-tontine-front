@@ -1,38 +1,39 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { TypeArticle } from 'src/models/TypeArticle';
+import { TypeArticleDto } from '../api/models';
+import { TypeArticleResourceService } from '../api/services';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TypeArticleService {
-  url: string  = environment.URL + 'typeArticle/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private typeArticleService: TypeArticleResourceService) { }
 
-  create(typeArticle: TypeArticle): Observable<TypeArticle> {
-      return this.http.post<TypeArticle>(this.url + 'create', typeArticle);
+  create(typeArticle: TypeArticleDto): Observable<TypeArticleDto> {
+      return this.typeArticleService.apiTypeArticleCreatePost({body: typeArticle});
   }
 
-  getAll(): Observable<TypeArticle[]> {
-      return this.http.get<TypeArticle[]>(this.url + 'list');
+  getAll(): Observable<TypeArticleDto[]> {
+      return this.typeArticleService.apiTypeArticleListGet();
   }
 
-  getOne(id: number): Observable<TypeArticle>{
-      return this.http.get<TypeArticle>(this.url + 'get/' + id);
+  getOne(id: number): Observable<TypeArticleDto>{
+      return this.typeArticleService.apiTypeArticleGetIdGet({id: id});
   }
 
-  search(key: string): Observable<TypeArticle[]>{
-      return this.http.get<TypeArticle[]>(this.url + 'agence/search/' + key);
+  search(key: string): Observable<TypeArticleDto[]>{
+      return this.typeArticleService.apiTypeArticleSearchLibelleGet({libelle: key});
   }
 
-  delete(typeArticleId?: number): Observable<void> {
-      return this.http.delete<void>(this.url+ 'delete/' + typeArticleId);
+  delete(typeArticleId: number): Observable<TypeArticleDto> {
+      return this.typeArticleService.apiTypeArticleDeleteIdDelete({id: typeArticleId});
   }
 
-  update(typeArticle: TypeArticle): Observable<TypeArticle> {
-      return this.http.put<TypeArticle>(this.url + 'update/'+ typeArticle.id, typeArticle);
+  update(typeArticleUpdatedId: number, typeArticle: TypeArticleDto): Observable<TypeArticleDto> {
+      return this.typeArticleService.apiTypeArticleUpdateIdPut({
+        id: typeArticleUpdatedId,
+        body: typeArticle
+      })
   }
 }

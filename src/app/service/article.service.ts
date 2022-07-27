@@ -1,38 +1,39 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { environment } from "src/environments/environment";
-import { Article } from "src/models/Article";
+import { ArticleDto } from "../api/models";
+import { ArticleResourceService } from "../api/services";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ArticleService {
-    url: string  = environment.URL + 'article/';
 
-    constructor(private http: HttpClient) { }
+    constructor(private articleService: ArticleResourceService) { }
 
-    create(article: Article): Observable<Article> {
-        return this.http.post<Article>(this.url + 'create', article);
+    create(article: ArticleDto): Observable<ArticleDto> {
+        return this.articleService.create({body: article});
     }
 
-    getAll(): Observable<Article[]> {
-        return this.http.get<Article[]>(this.url + 'list');
+    getAll(): Observable<ArticleDto[]> {
+        return this.articleService.list();
     }
 
-    getOne(id: number): Observable<Article>{
-        return this.http.get<Article>(this.url + 'get/' + id);
+    getOne(articleId: number): Observable<ArticleDto>{
+        return this.articleService.get({id: articleId});
     }
 
-    search(key: string): Observable<Article[]>{
-        return this.http.get<Article[]>(this.url + 'search/' + key);
+    search(key: string): Observable<ArticleDto[]>{
+        return this.articleService.search({key: key});
     }
 
-    delete(articleId?: number): Observable<void> {
-        return this.http.delete<void>(this.url+ 'delete/' + articleId);
+    delete(articleId: number): Observable<ArticleDto> {
+        return this.articleService.delete({id: articleId});
     }
 
-    update(article: Article): Observable<Article> {
-        return this.http.put<Article>(this.url + 'update/'+ article.id, article);
+    update(articleUpdatedId: number, article: ArticleDto): Observable<ArticleDto> {
+        return this.articleService.update({
+            id: articleUpdatedId,
+            body: article
+        })
     }
 }

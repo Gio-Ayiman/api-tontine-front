@@ -1,0 +1,36 @@
+<div class="col-12">
+    <form class="form" [formGroup]="addArticleForm" (ngSubmit)="submit()">
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="libelle">Libelle</label>
+                <input pInputText class="form-control" id="libelle" placeholder="Libelle" formControlName="libelle">
+            </div>
+            <div class="form-group col-6">
+                <label for="price">Prix</label>
+                <input pInputText class="form-control" type="number" id="price" formControlName="prix">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="qte">Quantite</label>
+                <input pInputText type="number" class="form-control" id="qte" formControlName="quantite">
+            </div>
+            <div class="form-group col-6">
+                <label for="select">Type de l'article</label>
+                <select pInputText class="form-select" id="select" formControlName="typeArticle">
+                    <option *ngFor="let type of typeArticles" [ngValue]="type.id"> {{ type.libelle }} </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="desc"> Description </label>
+            <input pInputText type="text" id="desc" class="form-control" formControlName="description">
+        </div>
+
+
+        <div class="d-flex justify-content-end">
+            <button pButton pRipple type="submit" [disabled]="!addArticleForm.valid" label="Enregistrer" class="mt-2 p-btn-success"></button>
+        </div>
+    </form>
+</div>
